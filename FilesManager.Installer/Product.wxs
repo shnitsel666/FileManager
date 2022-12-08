@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	
+	<!-- Application identifier for each platform -->
+	<?if $(var.Platform)=x64?>
+		<?define ProductCode = "*" ?>
+	<?else?>
+		<?define ProductCode = "*" ?>
+	<?endif?>
+	
+	<!-- This upgrade code GUID should be unchangeable for application updating possibility. -->
+	<?define UpgradeCode = "{1DA6F62E-9FFA-4D34-BF3E-321884C54F0C}" ?>
+	<!-- Application version. Should be changed after each release. -->
+	<?define BuildVersion = 1.0.1?>
+
+	<!-- Main product -->
+	<Product Id="$(var.ProductCode)"
+			 Name="!(loc.ProductName_$(var.Platform))"
+			 Language="!(loc.Language)"
+			 Version="$(var.BuildVersion)"
+			 Manufacturer="!(loc.Company)"
+			 UpgradeCode="$(var.UpgradeCode)">
+		
+		<!-- Package details -->
+		<Package
+			InstallerVersion="300"
+			InstallPrivileges="elevated"
+			Compressed="yes"
+			InstallScope="perMachine"
+			Platform="$(var.Platform)"
+			Manufacturer="!(loc.Company)"
+			Description="!(loc.Description)"
+			Keywords="!(loc.Keywords)"
+			Comments="!(loc.Comments)"
+			Languages="!(loc.Language)"
+		/>
+		
+		<Upgrade Id="$(var.UpgradeCode)">
+			<UpgradeVersion 
+				  OnlyDetect='yes' 
+				  Property='SELFFOUND'
+				  Minimum='1.0.0' 
+				  IncludeMinimum='yes'
+				  Maximum='99.0.1' 
+				  IncludeMaximum='yes' 
+			/>
+			<UpgradeVersion 
+				  OnlyDetect='yes' 
+				  Property='NEWERFOUND'
+				  Minimum='1.0.0' 
+				  IncludeMinimum='no'
+			/>
+		</Upgrade>
+		<!-- Downgrade message -->
+		<MajorUpgrade 
+			AllowDowngrades="no" 
+			AllowSameVersionUpgrades="yes" 
+			Schedule="afterInstallInitialize" 
+			DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" 
+		/>
+
+		<!-- Add .cab file into MSI -->
+		<MediaTemplate
+			EmbedCab="yes"
+		/>
+		
+		<!-- Main app icon -->
+		<Icon Id="icon.ico" SourceFile="$(var.FileManager.ProjectDir)\icon.ico"/>
+
+		<!-- Add icon in Add/Remove programs -->
+		<Property Id="APPPRODUCTION">icon.ico</Property>
+		<!-- Support url in Add/Remove programs -->
+		<Property Id="APPURLINFOABOUT">https://www.lanit.ru/</Property>
+
+		<!-- Basic UI installer -->
+		<UI Id="UserInterface">
+			<Property Id="WIXUI_INSTALLDIR" Value="TARGETDIR" />
+			<Property Id="WixUI_Mode" Value="Custom" />
+
+			<TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+			<TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="9" Bold="yes" />
+			<TextStyle Id="WixUI_Font_Title"  FaceName="Tahoma" Size="9" Bold="yes" />
+			<Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+			<DialogRef Id="ProgressDlg" />
+			<DialogRef Id="ErrorDlg" />
+			<DialogRef Id="FilesInUse" />
+			<DialogRef Id="FatalError" />
+			<DialogRef Id="UserExit" />
+			<Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+			<Publish Dialog="WelcomeDlg" Control="Next" Event="EndDialog" Value="Return" Order="2"></Publish>
+		</UI>
+		<UIRef Id="WixUI_Common" />
+		<!-- Change the installer UI background images -->
+		<!-- <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\Assets\License.rtf" />-->
+		<WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Assets\Background.bmp" />
+		<WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Assets\Banner.bmp" />
+		<!-- Components shortcuts (files, folders, etc) -->
+		<?if $(var.Platform)=x64?>
+			<Feature Id="ProductFeature" Title="FileManager" Level="1">
+					<ComponentGroupRef Id="ProductComponents64"/>
+			</Feature>
+		<?else?>
+			<Feature Id="ProductFeature" Title="FileManager" Level="1">
+				<ComponentGroupRef Id="ProductComponents86"/>
+			</Feature>
+		<?endif?>
+	</Product>
+</Wix>
