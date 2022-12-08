@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="ru-RU" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+	<String Id="ProductName_x86">WebClient FilesManager 1.0.1 x86</String>
+	<String Id="ProductName_x64">WebClient FilesManager 1.0.1 x64</String>
+	<String Id="ProductNameFolder">WebClientFilesManager</String>
+	<String Id="Company">shnitsel666</String>
+	<String Id="Language">1033</String>
+	<String Id="Description">WebClient FilesManager 1.0.1</String>
+	<String Id="Keywords">WebClient FilesManager</String>
+	<String Id="Comments">WebClient FilesManager</String>
+	<String Id="DowngradeErrorMessage">The newest version of application has already been installed.</String>
+</WixLocalization>

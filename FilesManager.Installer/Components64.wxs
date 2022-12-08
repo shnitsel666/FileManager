@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+		<!-- Product Components for 64 os -->
+		<?if $(var.Platform)=x64?>
+		<ComponentGroup Id="ProductComponents64">
+			<ComponentRef Id="aspnetcorev2_inprocess.dll" />
+			<ComponentRef Id="config.json" />
+			<ComponentRef Id="filesHistory.json" />
+			<ComponentRef Id="FileManager.exe" />
+			<ComponentRef Id="FileManager.pdb" />
+			<ComponentRef Id="log4net.config" />
+			<ComponentRef Id="web.config" />
+		</ComponentGroup>
+		<DirectoryRef Id="INSTALLFOLDER" FileSource="..\FileManager\bin\Release\net6.0\publish\64">
+			<Component Id="aspnetcorev2_inprocess.dll" Guid="{9332AB44-1E64-4E42-B976-DF7B761A0816}">
+				<File Id="file_aspnetcorev2_inprocess.dll" KeyPath="yes" Name="aspnetcorev2_inprocess.dll" />
+			</Component>
+			<Component Id="config.json" Guid="{8E192B5A-CC63-491D-91D0-A2166E05A2F6}">
+				<File Id="file_config.json" KeyPath="yes" Name="config.json" />
+			</Component>
+			<Component Id="filesHistory.json" Guid="{97526D3C-B265-4EE4-BB84-0D9762E42796}">
+				<File Id="file_filesHistory.json" KeyPath="yes" Name="filesHistory.json" />
+			</Component>
+			<Component Id="FileManager.exe" Guid="{21D58081-A762-46FD-8436-A8BA819417BC}">
+				<File Id="file_FileManager.exe" KeyPath="yes" Name="FileManager.exe" />
+			</Component>
+			<Component Id="FileManager.pdb" Guid="{1FB523E9-D4C3-4CB1-A33A-8214BDD99820}">
+				<File Id="file_FileManager.pdb" KeyPath="yes" Name="FileManager.pdb" />
+			</Component>
+			<Component Id="libman.json" Guid="{9332AB43-1E64-4E42-B976-DF7A761A0816}">
+				<File Id="file_libman.json" KeyPath="yes" Name="libman.json" />
+			</Component>
+			<Component Id="log4net.config" Guid="{22B3493F-84C6-4392-8570-BA9160F8764A}">
+				<File Id="file_log4net.config" KeyPath="yes" Name="log4net.config" />
+			</Component>
+			<Component Id="web.config" Guid="{74B24DD3-FE37-4AFE-B94A-61ACD1134E5F}">
+				<File Id="file_web.config" KeyPath="yes" Name="web.config" />
+			</Component>
+
+			<!-- Desktop shortcut to main application -->
+			<Component Id="ApplicationDesktopShortcut" Guid="{E811D216-3D85-4907-8654-C1E48E1FF033}">
+
+				<Shortcut 
+					Id="ApplicationDesktopShortcut"
+					Name="!(loc.ProductName_$(var.Platform))"
+					Target="[INSTALLFOLDER]FileManager.exe"
+					Directory="DesktopFolder"
+					WorkingDirectory="INSTALLFOLDER"
+					Icon="icon.ico"
+                  />
+				<RegistryValue Id="RegShortcutDesktopKey" Root="HKCU" Key="SOFTWARE\$(loc.ProductNameFolder)" Name="Shortcut" Value="1" Type="integer" KeyPath="yes" />
+			</Component>
+
+			<!-- Startup shortcut to main application -->
+			<Component Id="ApplicationStartupShortcut" Guid="{45773C59-FE30-4A8C-92C8-128963099EC0}">
+				<Shortcut 
+					Id="ApplicationStartupShortcut"
+					Name="!(loc.ProductName_$(var.Platform))"
+					Target="[INSTALLFOLDER]FileManager.exe"
+					Directory="StartupFolder"
+					WorkingDirectory="INSTALLFOLDER"
+					Icon="icon.ico"
+                  />
+				<RegistryValue Id="RegShortcutStartupKey" Root="HKCU" Key="SOFTWARE\$(loc.ProductNameFolder)" Name="Shortcut" Value="1" Type="integer" KeyPath="yes" />
+			</Component>
+		</DirectoryRef>
+		<?endif?>
+	</Fragment>
+</Wix>
