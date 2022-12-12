@@ -2,17 +2,18 @@
 {
     using System;
     using System.IO;
-    using System.Text.Json;
     using FilesManager.Constants.AppConfigs;
-    using FilesManager.Models;
+    using FilesManager.Models.Infrastructure;
 
     public class AppConfigService : IAppConfigService
     {
         private AppConfig _appConfig;
+        private IConfiguration _configuration;
 
         #region .ctor
-        public AppConfigService()
+        public AppConfigService(IConfiguration configuration)
         {
+            _configuration = configuration;
             SetConfig();
         }
         #endregion
@@ -29,13 +30,10 @@
 
         private AppConfig SetConfig()
         {
-            AppConfig appConfigJson = ReadConfig(DefaultsParams.ConfigFilePath);
-
             _appConfig = new()
             {
-                CurrentVersion = !string.IsNullOrEmpty(appConfigJson.CurrentVersion) ? appConfigJson.CurrentVersion : DefaultsConfigs.CurrentVersion,
-                FileNamePrefix = !string.IsNullOrEmpty(appConfigJson.FileNamePrefix) ? appConfigJson.FileNamePrefix : DefaultsConfigs.FileNamePrefix,
-                LanimageUrl = !string.IsNullOrEmpty(appConfigJson.LanimageUrl) ? appConfigJson.LanimageUrl : DefaultsConfigs.LanimageUrl,
+                CurrentVersion = !string.IsNullOrEmpty(_configuration["CurrentVersion"]) ? _configuration["CurrentVersion"] : DefaultsConfigs.CurrentVersion,
+                FileNamePrefix = !string.IsNullOrEmpty(_configuration["FileNamePrefix"]) ? _configuration["FileNamePrefix"] : DefaultsConfigs.FileNamePrefix,
                 FilesUploadBasePath = DefaultsConfigs.FilesUploadBasePath,
                 FilesHistoryPath = DefaultsConfigs.FilesHistoryPath,
             };
@@ -70,25 +68,6 @@
             {
                 Logger.Log.Error($"Ошибка проверки папки загрузки: {error.Message}");
                 Logger.Log.Error($"Ошибка проверки папки загрузки: {error.StackTrace}");
-            }
-        }
-        #endregion
-
-        #region ReadConfig()
-
-        /// <summary>
-        /// Считывает конфиг JSON.
-        /// </summary>
-        private static AppConfig ReadConfig(string path)
-        {
-            try
-            {
-                return File.Exists(@path) ? JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(@path)) : null;
-            }
-            catch (Exception error)
-            {
-                Logger.Log.Error($"Cannot read config.json {error.Message}, {error.StackTrace}");
-                return null;
             }
         }
         #endregion

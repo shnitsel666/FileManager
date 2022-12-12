@@ -1,4 +1,4 @@
-﻿namespace FilesManager.Models
+﻿namespace FilesManager.Models.Infrastructure
 {
     public class AppConfig
     {
@@ -16,11 +16,6 @@
         /// Path to downloaded files folder.
         /// </summary>
         public string FilesUploadBasePath { get; init; }
-
-        /// <summary>
-        /// Lanimage connector url.
-        /// </summary>
-        public string LanimageUrl { get; init; }
 
         /// <summary>
         /// Path to files history file.

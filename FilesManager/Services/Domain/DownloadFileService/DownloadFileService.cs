@@ -6,7 +6,6 @@
     using System.Threading;
     using System.Threading.Tasks;
     using FilesManager.HelpersMethods;
-    using FilesManager.Models;
     using FilesManager.Models.ApiModels;
     using FilesManager.Models.Data;
     using FilesManager.Models.Infrastructure;

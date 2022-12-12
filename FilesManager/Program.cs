@@ -1,48 +1,45 @@
-﻿namespace FilesManager
+﻿using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using FilesManager;
+using FilesManager.Extensions;
+using FilesManager.Hubs;
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+ConfigurationManager configuration = builder.Configuration;
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
 {
-    using System;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Hosting;
+    string xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
 
-    public class Program
-    {
-        private static string baseAddress = "http://localhost:9000";
-
-        [DllImport("kernel32.dll")]
-        public static extern IntPtr GetConsoleWindow();
-
-        [DllImport("user32.dll")]
-        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-        public const int SW_HIDE = 0;
-
-        public static void Main(string[] args)
-        {
-            try
-            {
-                // Скрываем консольное окно
-                IntPtr handle = GetConsoleWindow();
-                ShowWindow(handle, SW_HIDE);
-
-                Process myProcess = Process.GetCurrentProcess();
-                myProcess.PriorityClass = ProcessPriorityClass.High;
-                CreateHostBuilder(args).Build().Run();
-                Logger.Log.Info("Application successfully started");
-            }
-            catch (Exception error)
-            {
-                Logger.Log.Error("Program Main method error: " + error.Message);
-            }
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls(baseAddress);
-                });
-    }
-}
+builder.Services.AddAppConfig();
+builder.Services.AddFilesServices();
+builder.Services.AddSignalRService();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+builder.Services.AddSignalR(hubOptions =>
+{
+    hubOptions.KeepAliveInterval = TimeSpan.FromMinutes(1000);
+});
+builder.Services.Configure<JsonSerializerOptions>(options =>
+{
+    options.Converters.Add(new JsonStringEnumConverter(allowIntegerValues: true));
+});
+Logger.InitLogger();
+builder.WebHost.UseUrls(builder.Configuration["LaunchURl"]);
+WebApplication app = builder.Build();
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseCors("CorsPolicy");
+app.MapControllers();
+app.UseHttpsRedirection();
+app.MapHub<FileAgentHub>("/events");
+app.Run();

@@ -1,6 +1,6 @@
 ﻿namespace FilesManager.Services.Application.AppConfigService
 {
-    using FilesManager.Models;
+    using FilesManager.Models.Infrastructure;
 
     public interface IAppConfigService
     {
