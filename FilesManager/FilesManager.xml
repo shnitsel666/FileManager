@@ -1,0 +1,435 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FilesManager</name>
+    </assembly>
+    <members>
+        <member name="M:FilesManager.Controllers.FilesManagerController.Download(FilesManager.Models.ApiModels.DownloadRequest)">
+            <summary>
+            Downloads file to local machine.
+            </summary>
+            <param name="downloadRequest">Download request.</param>
+            <returns>Always return HTTP code 200 with custom error codes.</returns>
+            <response code="200">
+            <para>If operation will be performed successfully, information about downloaded file will be returned.</para>
+            <para>If operation won't be performed successfully, error message and code will be returned.</para>
+            <para>Errors codes:</para>
+            <para>-1 - unhandled exception.</para>
+            <para>0 - success operation.</para>
+            </response>
+        </member>
+        <member name="M:FilesManager.Controllers.FilesManagerController.Upload(FilesManager.Models.ApiModels.UploadRequest)">
+            <summary>
+            Returns files to webclient.
+            </summary>
+            <param name="uploadRequest">Upload request.</param>
+            <returns>Always return HTTP code 200 with custom error codes.</returns>
+            <response code="200">
+            <para>If operation will be performed successfully, file will be returned to webclient.</para>
+            <para>If operation won't be performed successfully, error message and code will be returned.</para>
+            <para>Errors codes:</para>
+            <para>-1 - unhandled exception.</para>
+            <para>0 - success operation.</para>
+            </response>
+        </member>
+        <member name="M:FilesManager.Controllers.FilesManagerController.Delete(FilesManager.Models.ApiModels.DeleteRequest)">
+            <summary>
+            Deletes file from local machine.
+            </summary>
+            <param name="deleteRequest">Delete request.</param>
+            <returns>Always return HTTP code 200 with custom error codes.</returns>
+            <response code="200">
+            <para>If operation will be performed successfully, file will be deleted from local machine.</para>
+            <para>If operation won't be performed successfully, error message and code will be returned.</para>
+            <para>Errors codes:</para>
+            <para>-1 - unhandled exception.</para>
+            <para>0 - success operation.</para>
+            </response>
+        </member>
+        <member name="M:FilesManager.Controllers.FilesManagerController.Connect(System.String)">
+            <summary>
+            Connect application with webclient.
+            </summary>
+            <param name="appVersion">App version.</param>
+            <returns>Always return HTTP code 200 with custom error codes.</returns>
+            <response code="200">
+            <para>If operation will be performed successfully, connection will be established.</para>
+            <para>If operation won't be performed successfully, error message and code will be returned.</para>
+            <para>Errors codes:</para>
+            <para>-1 - unhandled exception.</para>
+            <para>0 - success operation.</para>
+            </response>
+        </member>
+        <member name="M:FilesManager.HelpersMethods.Helpers.IsLinux">
+            <summary>
+            Определяет текущую платформу (скрывает функционал сканирования в вебклиенте).
+            </summary>
+        </member>
+        <member name="M:FilesManager.HelpersMethods.Helpers.GetFileName(System.String,System.String,System.Int64,System.Int64)">
+            <summary>
+            Формирует новое имя файла.
+            </summary>
+        </member>
+        <member name="T:FilesManager.Infrastructure.Exceptions.ApiException">
+            <summary>
+            Исключение связанное с работой Api.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Infrastructure.Exceptions.ApiException.GetCustomErrorsMessage">
+            <summary>
+            Возвращает кастомное сообщение ошибки.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.ConnectResponse.Platform">
+            <summary>
+            Current platform, Windows or Linux
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DeleteRequest.FileName">
+            <summary>
+            Original file name.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DeleteRequest.FileId">
+            <summary>
+            File ID.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DeleteRequest.FileVersionId">
+            <summary>
+            File version ID.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadRequest.FileName">
+            <summary>
+            Original file name.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadRequest.FileBase64">
+            <summary>
+            Base64 file encoded.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadRequest.FileId">
+            <summary>
+            File ID.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadRequest.UID">
+            <summary>
+            Unique file ID for SignalR event.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadRequest.FileVersionId">
+            <summary>
+            File version ID.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadRequest.Readonly">
+            <summary>
+            Either should file be opened only for view.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadRequest.TrackHistory">
+            <summary>
+            Either should files changes be tracked or not.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadRequest.OpenForView">
+            <summary>
+            Either file should be opened in associated programm or not.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadRequest.UseSignalR">
+            <summary>
+            Either SignalR should be used for returning or not.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadResponse.FileName">
+            <summary>
+            Имя файла после сохранения.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadResponse.DownloadTime">
+            <summary>
+            Время загрузки.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadResponse.FileLocalPath">
+            <summary>
+            Локальный путь.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadResponse.FileId">
+            <summary>
+            ID файла.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.DownloadResponse.FileVersionId">
+            <summary>
+            ID версии файла.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.UploadRequest.Uid">
+            <summary>
+            Уникальный идентификатор файла для события SignalR.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.UploadResponse.FileName">
+            <summary>
+            Имя файла.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.UploadResponse.DownloadTime">
+            <summary>
+            Время загрузки.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.UploadResponse.FileLocalPath">
+            <summary>
+            Локальный путь к файлу.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.UploadResponse.FileBase64">
+            <summary>
+            File Base64.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.UploadResponse.FileId">
+            <summary>
+            ID файла.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.UploadResponse.FileVersionId">
+            <summary>
+            ID версии файла.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.ApiModels.UploadResponse.UID">
+            <summary>
+            Уникальный идентификатор файла для события SignalR.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.Data.FilesHistoryItem.SelectedPath">
+            <summary>
+            Путь куда был скачан файл.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.Data.FilesHistoryItem.WasSent">
+            <summary>
+            Файл был отправлен в вебклиент через SignalR.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.Data.FilesHistoryItem.WasClosed">
+            <summary>
+            Файл был закрыт ассоциированным приложением.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.Data.FilesHistoryItem.WasOpened">
+            <summary>
+            Файл был открыт ассоциированным приложением.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.Data.FilesHistoryItem.UID">
+            <summary>
+            Уникальный идентификатор файла для события SignalR.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.Infrastructure.AppConfig.CurrentVersion">
+            <summary>
+            Current version of application.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.Infrastructure.AppConfig.FileNamePrefix">
+            <summary>
+            Prefix for downloaded files names.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.Infrastructure.AppConfig.FilesUploadBasePath">
+            <summary>
+            Path to downloaded files folder.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.Infrastructure.AppConfig.FilesHistoryPath">
+            <summary>
+            Path to files history file.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.Infrastructure.Response`1.Code">
+            <summary>
+            Gets or sets operation statuses:
+            Exception = -1
+            Succes = 0
+            Another error = N.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.Infrastructure.Response`1.Message">
+            <summary>
+            Gets or sets message with warning or error.
+            </summary>
+        </member>
+        <member name="P:FilesManager.Models.Infrastructure.Response`1.Data">
+            <summary>
+            Gets or sets data with type T.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Models.Infrastructure.Response`1.DoMethod(System.Action{FilesManager.Models.Infrastructure.Response{`0}})">
+            <summary>
+            Wrapper delegate methods for cautching exceptions and custom handling for errors.
+            </summary>
+            <type name="T">Type of entity.</type>
+            <param name="action">Wrapper delegate method.</param>
+            <returns>Returns result or error.</returns>
+        </member>
+        <member name="M:FilesManager.Models.Infrastructure.Response`1.DoMethod(System.Action{FilesManager.Models.Infrastructure.Response{`0}},System.Action{FilesManager.Models.Infrastructure.Response{`0}})">
+            <summary>
+            Wrapper delegate methods for cautching exceptions and custom handling for errors.
+            </summary>
+            <type name="T">Type of entity.</type>
+            <param name="action">Wrapper delegate method.</param>
+            <param name="errorHandler">Wrapper delegate handler for errors.</param>
+            <returns>Returns result or error.</returns>
+        </member>
+        <member name="M:FilesManager.Models.Infrastructure.Response`1.DoMethodAsync(System.Func{FilesManager.Models.Infrastructure.Response{`0},System.Threading.Tasks.Task{FilesManager.Models.Infrastructure.Response{`0}}})">
+            <summary>
+            Async wrapper delegate methods for cautching exceptions and custom handling for errors.
+            </summary>
+            <type name="T">Type of entity.</type>
+            <param name="action">Wrapper delegate method.</param>
+            <returns>Returns result or error.</returns>
+        </member>
+        <member name="M:FilesManager.Models.Infrastructure.Response`1.DoMethodAsync(System.Func{FilesManager.Models.Infrastructure.Response{`0},System.Threading.Tasks.Task{FilesManager.Models.Infrastructure.Response{`0}}},System.Func{FilesManager.Models.Infrastructure.Response{`0},System.Threading.Tasks.Task{FilesManager.Models.Infrastructure.Response{`0}}})">
+            <summary>
+            Async wrapper delegate methods for cautching exceptions and custom handling for errors.
+            </summary>
+            <type name="T">Type of entity.</type>
+            <param name="action">Wrapper delegate method.</param>
+            <param name="errorHandler">Wrapper delegate handler for errors.</param>
+            <returns>Returns result or error.</returns>
+        </member>
+        <member name="M:FilesManager.Models.Infrastructure.Response`1.Throw(System.Int32,System.String)">
+            <summary>
+            If error with specified code and message has to be thrown.
+            </summary>
+            <param name="code">Error code.</param>
+            <param name="message">Error message.</param>
+            <exception cref="T:FilesManager.Models.Infrastructure.Response`1.ResponseException">Special exception</exception>
+        </member>
+        <member name="M:FilesManager.Models.Infrastructure.Response`1.Throw(System.String)">
+            <summary>
+            If error with specified message has to be thrown (Code = -1).
+            </summary>
+            <param name="message">Error message.</param>
+            <exception cref="T:FilesManager.Models.Infrastructure.Response`1.ResponseException">Special exception.</exception>
+        </member>
+        <member name="M:FilesManager.Models.Infrastructure.Response`1.GetResultIfNotError">
+            <summary>
+            Returns result if Code == 0.
+            </summary>
+            <returns>Data.</returns>
+            <exception cref="T:FilesManager.Models.Infrastructure.Response`1.ResponseException">Original error.</exception>
+        </member>
+        <member name="M:FilesManager.Models.Infrastructure.Response`1.GetResultIfNotError(System.String)">
+            <summary>
+            Returns result if Code == 0.
+            </summary>
+            <param name="errorMessage">Error text will be added to start of message.</param>
+            <returns>Data.</returns>
+            <exception cref="T:FilesManager.Models.Infrastructure.Response`1.ResponseException">Original error.</exception>
+        </member>
+        <member name="M:FilesManager.Models.Infrastructure.Response`1.GetResultIfNotError(System.String,System.Action{FilesManager.Models.Infrastructure.Response{`0}})">
+            <summary>
+            Returns result if Code == 0.
+            </summary>
+            <param name="errorMessage">Error text will be added to start of message.</param>
+            <param name="action">Error handler method that will be called if code != 0.</param>
+            <returns>Data.</returns>
+            <exception cref="T:FilesManager.Models.Infrastructure.Response`1.ResponseException">Original error.</exception>
+        </member>
+        <member name="M:FilesManager.Services.Application.AppConfigService.AppConfigService.CheckFolders(FilesManager.Models.Infrastructure.AppConfig)">
+            <summary>
+            Проверяет существование папок и по возможности создаёт их.
+            </summary>
+        </member>
+        <member name="T:FilesManager.Services.Domain.ConnectService.IConnectService">
+            <summary>
+            Service is responsible for connection between application and webclient and defines current platform (linux или windows).
+            </summary>
+        </member>
+        <member name="M:FilesManager.Services.Domain.ConnectService.IConnectService.Connect(System.String)">
+            <summary>
+            Connect to webclient with environment details
+            </summary>
+        </member>
+        <member name="T:FilesManager.Services.Domain.DeleteFileService.IDeleteFileService">
+            <summary>
+            Service is responsible for deleting useless files from local machine.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Services.Domain.DeleteFileService.IDeleteFileService.Delete(FilesManager.Models.ApiModels.DeleteRequest)">
+            <summary>
+            Deletes file from local machine and from files downloading history.
+            </summary>
+        </member>
+        <member name="T:FilesManager.Services.Domain.DownloadFileService.IDownloadFileService">
+            <summary>
+            Service is responsible for downloading files from webclient and tracking their changes.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Services.Domain.DownloadFileService.IDownloadFileService.Download(FilesManager.Models.ApiModels.DownloadRequest)">
+            <summary>
+            Downloads file to local machine.
+            </summary>
+        </member>
+        <member name="T:FilesManager.Services.Domain.TrackFileService.ITrackFileService">
+            <summary>
+            Service is responsible for tracking files changes history.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Services.Domain.TrackFileService.ITrackFileService.TrackFileHistory(FilesManager.Models.ApiModels.DownloadRequest,System.String)">
+            <summary>
+            Adds files to downloads history with download time tracking with custom path.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Services.Domain.TrackFileService.ITrackFileService.TrackFileHistory(FilesManager.Models.ApiModels.DownloadRequest)">
+            <summary>
+            Adds files to downloads history with download time tracking with custom path.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Services.Domain.TrackFileService.ITrackFileService.CheckAndRestoreHistoryFile">
+            <summary>
+            Restores downloads history file.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Services.Domain.TrackFileService.ITrackFileService.GetSavedFilePath(System.String)">
+            <summary>
+            Gets local path to saved file.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Services.Domain.TrackFileService.ITrackFileService.WasFileChanged(System.String,System.DateTime)">
+            <summary>
+            Checks if file was changed by comparing file writing datetime.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Services.Domain.TrackFileService.ITrackFileService.GetFilesHistory">
+            <summary>
+            Check if history file is not empty and exists, or recreate new empty history file.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Services.Domain.TrackFileService.ITrackFileService.RewriteFileHistory(FilesManager.Models.Data.FilesHistory)">
+            <summary>
+            Rewrites files downloading history.
+            </summary>
+        </member>
+        <member name="T:FilesManager.Services.Domain.UploadFileService.IUploadFileService">
+            <summary>
+            Service is responsible for files returning to webclient.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Services.Domain.UploadFileService.IUploadFileService.Upload(FilesManager.Models.ApiModels.UploadRequest)">
+            <summary>
+            Returns files to webclient.
+            </summary>
+        </member>
+    </members>
+</doc>

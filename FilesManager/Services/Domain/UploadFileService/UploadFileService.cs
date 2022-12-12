@@ -4,7 +4,6 @@
     using System.IO;
     using FilesManager.Constants;
     using FilesManager.HelpersMethods;
-    using FilesManager.Models;
     using FilesManager.Models.ApiModels;
     using FilesManager.Models.Infrastructure;
     using FilesManager.Services.Application.AppConfigService;

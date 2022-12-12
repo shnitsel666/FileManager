@@ -6,9 +6,9 @@
     using System.Threading;
     using FilesManager.HelpersMethods;
     using FilesManager.Hubs;
-    using FilesManager.Models;
     using FilesManager.Models.ApiModels;
     using FilesManager.Models.Data;
+    using FilesManager.Models.Infrastructure;
     using FilesManager.Services.Application.AppConfigService;
     using FilesManager.Services.Domain.TrackFileService;
     using Microsoft.AspNetCore.SignalR;

@@ -93,11 +93,10 @@
         /// <para>-1 - unhandled exception.</para>
         /// <para>0 - success operation.</para>
         /// </response>
-        [HttpPost("[action]/appVersion={appVersion}")]
+        [HttpGet("[action]/appVersion={appVersion}")]
         [ProducesResponseType(typeof(Response<ConnectResponse>), StatusCodes.Status200OK)]
         public IActionResult Connect(string appVersion) =>
             Ok(_filesService.Connect(appVersion));
         #endregion
-
     }
 }

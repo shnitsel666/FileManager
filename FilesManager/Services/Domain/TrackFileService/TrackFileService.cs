@@ -7,7 +7,6 @@
     using System.Text.Json.Serialization;
     using System.Text.Unicode;
     using FilesManager.HelpersMethods;
-    using FilesManager.Models;
     using FilesManager.Models.ApiModels;
     using FilesManager.Models.Data;
     using FilesManager.Models.Infrastructure;
