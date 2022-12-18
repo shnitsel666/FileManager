@@ -44,5 +44,10 @@
         /// Rewrites files downloading history.
         /// </summary>
         Response<bool> RewriteFileHistory(FilesHistory filesHistory);
+
+        /// <summary>
+        /// Checks file in files history.
+        /// </summary>
+        Response<bool> FilesHistoryItemExists(string fileName);
     }
 }

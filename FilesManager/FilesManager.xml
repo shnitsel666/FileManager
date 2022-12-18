@@ -60,6 +60,48 @@
             <para>0 - success operation.</para>
             </response>
         </member>
+        <member name="M:FilesManager.Controllers.TestsController.IsFileOpened(FilesManager.Models.ApiModels.DownloadRequest)">
+            <summary>
+            Checks if file is opened.
+            </summary>
+            <param name="downloadRequest">Downloaded file information.</param>
+            <returns>Always return HTTP code 200 with custom error codes.</returns>
+            <response code="200">
+            <para>If operation will be performed successfully, connection will be established.</para>
+            <para>If operation won't be performed successfully, error message and code will be returned.</para>
+            <para>Errors codes:</para>
+            <para>-1 - unhandled exception.</para>
+            <para>0 - success operation.</para>
+            </response>
+        </member>
+        <member name="M:FilesManager.Controllers.TestsController.IsFileExists(FilesManager.Models.ApiModels.DownloadRequest)">
+            <summary>
+            Checks if file exists.
+            </summary>
+            <param name="downloadRequest">Downloaded file information.</param>
+            <returns>Always return HTTP code 200 with custom error codes.</returns>
+            <response code="200">
+            <para>If operation will be performed successfully, connection will be established.</para>
+            <para>If operation won't be performed successfully, error message and code will be returned.</para>
+            <para>Errors codes:</para>
+            <para>-1 - unhandled exception.</para>
+            <para>0 - success operation.</para>
+            </response>
+        </member>
+        <member name="M:FilesManager.Controllers.TestsController.IsFileReadonly(FilesManager.Models.ApiModels.DownloadRequest)">
+            <summary>
+            Checks if file has readonly attribute.
+            </summary>
+            <param name="downloadRequest">Downloaded file information.</param>
+            <returns>Always return HTTP code 200 with custom error codes.</returns>
+            <response code="200">
+            <para>If operation will be performed successfully, connection will be established.</para>
+            <para>If operation won't be performed successfully, error message and code will be returned.</para>
+            <para>Errors codes:</para>
+            <para>-1 - unhandled exception.</para>
+            <para>0 - success operation.</para>
+            </response>
+        </member>
         <member name="M:FilesManager.HelpersMethods.Helpers.IsLinux">
             <summary>
             Определяет текущую платформу (скрывает функционал сканирования в вебклиенте).
@@ -350,6 +392,58 @@
             <summary>
             Проверяет существование папок и по возможности создаёт их.
             </summary>
+        </member>
+        <member name="M:FilesManager.Services.Application.SignalRService.ISignalRService.CleanHistory">
+            <summary>
+            Deletes uploaded files from history.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Services.Application.SignalRService.ISignalRService.StartFilesTracking">
+            <summary>
+            Starts files changes tracking.
+            </summary>
+        </member>
+        <member name="M:FilesManager.Services.Application.TestService.ITestService.IsFileOpened(FilesManager.Models.ApiModels.DownloadRequest)">
+            <summary>
+            Checks if file is opened.
+            </summary>
+            <param name="downloadRequest">Downloaded file information.</param>
+        </member>
+        <member name="M:FilesManager.Services.Application.TestService.ITestService.IsFileExists(FilesManager.Models.ApiModels.DownloadRequest)">
+            <summary>
+            Checks if file exists.
+            </summary>
+            <param name="downloadRequest">Downloaded file information.</param>
+        </member>
+        <member name="M:FilesManager.Services.Application.TestService.ITestService.IsFileReadonly(FilesManager.Models.ApiModels.DownloadRequest)">
+            <summary>
+            Checks if file has readonly attribute.
+            </summary>
+            <param name="downloadRequest">Downloaded file information.</param>
+        </member>
+        <member name="M:FilesManager.Services.FilesService.IFilesService.Download(FilesManager.Models.ApiModels.DownloadRequest)">
+            <summary>
+            Downloads file to local machine.
+            </summary>
+            <param name="downloadRequest">Download request.</param>
+        </member>
+        <member name="M:FilesManager.Services.FilesService.IFilesService.Connect(System.String)">
+            <summary>
+            Connect application with webclient.
+            </summary>
+            <param name="appVersion">App version.</param>
+        </member>
+        <member name="M:FilesManager.Services.FilesService.IFilesService.Upload(FilesManager.Models.ApiModels.UploadRequest)">
+            <summary>
+            Returns files to webclient.
+            </summary>
+            <param name="uploadRequest">Upload request.</param>
+        </member>
+        <member name="M:FilesManager.Services.FilesService.IFilesService.Delete(FilesManager.Models.ApiModels.DeleteRequest)">
+            <summary>
+            Deletes file from local machine.
+            </summary>
+            <param name="deleteRequest">Delete request.</param>
         </member>
         <member name="T:FilesManager.Services.Domain.ConnectService.IConnectService">
             <summary>

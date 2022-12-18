@@ -2,6 +2,7 @@
 {
     using FilesManager.Services.Application.AppConfigService;
     using FilesManager.Services.Application.SignalRService;
+    using FilesManager.Services.Application.TestService;
     using FilesManager.Services.Domain.ConnectService;
     using FilesManager.Services.Domain.DeleteFileService;
     using FilesManager.Services.Domain.DownloadFileService;
@@ -32,6 +33,7 @@
             services.AddSingleton<IDownloadFileService, DownloadFileService>();
             services.AddTransient<IDeleteFileService, DeleteFileService>();
             services.AddSingleton<IFilesService, FilesService>();
+            services.AddSingleton<ITestService, TestService>();
             return services;
         }
     }
