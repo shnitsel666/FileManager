@@ -39,7 +39,36 @@
             Timer timer = new(tm, num, 3000, 5000);
         }
 
-        public void FilesTracking(object obj)
+        public void CleanHistory()
+        {
+            try
+            {
+                if (!Helpers.IsFileLocked(_config.FilesHistoryPath))
+                {
+                    FilesHistory filesHistory1 = _trackFileService.GetFilesHistory().GetResultIfNotError();
+                    FilesHistory filesHistory2 = _trackFileService.GetFilesHistory().GetResultIfNotError();
+                    foreach (KeyValuePair<string, FilesHistoryItem> file in filesHistory1.Files)
+                    {
+                        string fileUploadPath = Path.Combine(file.Value.SelectedPath, file.Key);
+                        if (!File.Exists(fileUploadPath) || file.Value.WasSent == true)
+                        {
+                            filesHistory2.Files.Remove(file.Key);
+                        }
+                    }
+
+                    _trackFileService.RewriteFileHistory(filesHistory2);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error($"Ошибка считывания истории файлов в SignalR: {e.Message}");
+                Logger.Log.Error($"Ошибка считывания истории файлов в SignalR: {e.StackTrace}");
+                Console.WriteLine($"Ошибка считывания истории файлов в SignalR: {e.Message}");
+                Console.WriteLine($"Ошибка считывания истории файлов в SignalR: {e.StackTrace}");
+            }
+        }
+
+        private void FilesTracking(object obj)
         {
             try
             {
@@ -103,33 +132,5 @@
             }
         }
 
-        public void CleanHistory()
-        {
-            try
-            {
-                if (!Helpers.IsFileLocked(_config.FilesHistoryPath))
-                {
-                    FilesHistory filesHistory1 = _trackFileService.GetFilesHistory().GetResultIfNotError();
-                    FilesHistory filesHistory2 = _trackFileService.GetFilesHistory().GetResultIfNotError();
-                    foreach (KeyValuePair<string, FilesHistoryItem> file in filesHistory1.Files)
-                    {
-                        string fileUploadPath = Path.Combine(file.Value.SelectedPath, file.Key);
-                        if (!File.Exists(fileUploadPath) || file.Value.WasSent == true)
-                        {
-                            filesHistory2.Files.Remove(file.Key);
-                        }
-                    }
-
-                    _trackFileService.RewriteFileHistory(filesHistory2);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error($"Ошибка считывания истории файлов в SignalR: {e.Message}");
-                Logger.Log.Error($"Ошибка считывания истории файлов в SignalR: {e.StackTrace}");
-                Console.WriteLine($"Ошибка считывания истории файлов в SignalR: {e.Message}");
-                Console.WriteLine($"Ошибка считывания истории файлов в SignalR: {e.StackTrace}");
-            }
-        }
     }
 }

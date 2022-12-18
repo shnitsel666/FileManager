@@ -45,11 +45,11 @@
         public Response<DownloadResponse> Download(DownloadRequest downloadRequest) =>
             Response<DownloadResponse>.DoMethod(resp =>
             {
-                if(downloadRequest.UseSignalR)
+                if (downloadRequest.UseSignalR)
                 {
                     try
                     {
-                        // На случай, если поток с сервисом SignalR упал, мы его пересоздаём.
+                        // If thread was closed, it'll be reopened;
                         if (!threadStartFilesTracking.IsAlive)
                         {
                             threadStartFilesTracking = new(_signalRService.StartFilesTracking)
@@ -66,6 +66,7 @@
                         Logger.Log.Info($"DownloadSignalR threadStartFilesTracking error: {e.StackTrace}");
                     }
                 }
+
                 string newFileName = Helpers.GetFileName(downloadRequest.FileName, _config.FileNamePrefix, downloadRequest.FileId, downloadRequest.FileVersionId);
                 string fileFullPath = Path.Combine(_config.FilesUploadBasePath, newFileName);
                 Logger.Log.Info($"New file local name: {downloadRequest.FileName}");
@@ -89,6 +90,7 @@
                 {
                     File.SetAttributes(fileFullPath, FileAttributes.ReadOnly);
                 }
+
                 Logger.Log.Info($"File was saved as: {fileFullPath}");
 
                 // Small pause for Linux file system.
@@ -96,13 +98,16 @@
                 {
                     Thread.Sleep(1500);
                 }
+
                 if (downloadRequest.OpenForView == true) {
                     Task.Run(() => OpenFileTask(downloadRequest));
                 }
+
                 if (!downloadRequest.OpenForView && downloadRequest.TrackHistory == true)
                 {
                     AddFileToHistory(downloadRequest);
                 }
+
                 Thread.Sleep(1000);
                 DateTime fileDownloadTime = File.GetLastWriteTime(fileFullPath);
 

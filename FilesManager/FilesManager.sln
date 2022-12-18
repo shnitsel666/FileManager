@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilesManager.Integration.Test", "..\FilesManager.Tests\FilesManager.Integration.Test\FilesManager.Integration.Test.csproj", "{4536D557-0C62-4825-A2DB-3F0CBA023935}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilesManager.IntegrationTests", "..\FilesManager.Tests\FilesManager.Integration.Test\FilesManager.IntegrationTests.csproj", "{4536D557-0C62-4825-A2DB-3F0CBA023935}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Http.Helper", "..\..\HTTPHelper\Http.Helper.csproj", "{7B39AE64-21E2-4021-8472-2A465BDA507D}"
 EndProject
